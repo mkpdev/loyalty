@@ -1,0 +1,35 @@
+<br/>
+<fieldset>
+  <legend>Generate Spending</legend>
+  <%= form_with model: @spend, url: spends_path do |f| %>
+    <div class="field">
+      <b><%= f.label :amount %><br /></b>
+      <%= f.number_field :amount, step: :any %>
+    </div>
+
+    <div class="field">
+        <%= f.check_box :foreign_spend %>
+        <%= f.label :foreign_spend %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+  <% end %>
+</fieldset>
+
+<p> Total Loyalty Points Earned: <b><%= current_user.total_rewards_earned %></b></p>
+
+<table>
+  <tr>
+    <th>Reward</th>
+    <th>Expiry</th>
+  </tr>
+
+  <% @loyalty_points.each do |point| %>
+    <%= render 'loyalty_point', point: point %>
+  <% end %>
+
+  <%= button_to "logout", destroy_user_session_path, method: :delete  %>
+  <%= button_to "Update profile", edit_user_registration_path(@spend.user), method: :get%>
+</table>
